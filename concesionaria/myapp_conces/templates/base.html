@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Concesionaria - {% endblock title %}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR UNIFICADO -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm py-2">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="{% url 'public:index' %}">
+          <span class="navbar-brand-icon">
+            <i class="fas fa-car fa-lg"></i>
+          </span>
+          <span class="navbar-brand-text">AutoVentas</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'public:index' %}"><i class="fas fa-home me-2"></i>Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'public:catalogo' %}"><i class="fas fa-car-side me-2"></i>Catálogo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'public:contacto' %}"><i class="fas fa-phone me-2"></i>Contacto</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'panel:inventario' %}"><i class="fas fa-clipboard-list me-2"></i>Inventario</a>
+            </li>
+            {% endif %}
+          </ul>
+          <ul class="navbar-nav ms-lg-3 mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="user-avatar me-2"><i class="fas fa-user"></i></span>
+                <span class="fw-semibold">{{ user.username }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                <li><h6 class="dropdown-header"><i class="fas fa-user me-2"></i>Mi Cuenta</h6></li>
+                <li><hr class="dropdown-divider"></li>
+                {% if perms.myapp_login.inventario_view %}
+                <li><a class="dropdown-item" href="{% url 'panel:inventario' %}"><i class="fas fa-clipboard-list me-2 text-primary"></i>Panel de Inventario</a></li>
+                {% endif %}
+                <li><a class="dropdown-item text-danger" href="{% url 'panel:logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="btn btn-outline-primary rounded-pill px-4 fw-semibold me-2" href="{% url 'panel:login' %}"><i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm" href="{% url 'panel:register' %}"><i class="fas fa-user-plus me-2"></i>Registrarse</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 pt-navbar-fix">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- FOOTER UNIFICADO -->
+    <footer class="bg-light pt-5 pb-3">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <div class="d-flex align-items-center mb-3">
+              <div class="footer-brand-icon">
+                <i class="fas fa-car fa-lg"></i>
+              </div>
+              <h4 class="fw-bold mb-0 text-dark">AutoVentas</h4>
+            </div>
+            <p class="text-muted mb-3">Tu concesionaria de confianza. Encuentra el vehículo perfecto con la mejor calidad y servicio al cliente.</p>
+            <div class="d-flex gap-2">
+              <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle footer-social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle footer-social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle footer-social-icon"><i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="col-md-2 mb-4 mb-md-0">
+            <h6 class="fw-bold mb-3 text-dark">Enlaces</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="{% url 'public:index' %}" class="text-muted text-decoration-none footer-link"><i class="fas fa-chevron-right me-2 text-primary"></i>Inicio</a></li>
+              <li class="mb-2"><a href="{% url 'public:catalogo' %}" class="text-muted text-decoration-none footer-link"><i class="fas fa-chevron-right me-2 text-primary"></i>Catálogo</a></li>
+              <li class="mb-2"><a href="{% url 'public:contacto' %}" class="text-muted text-decoration-none footer-link"><i class="fas fa-chevron-right me-2 text-primary"></i>Contacto</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4 mb-md-0">
+            <h6 class="fw-bold mb-3 text-dark">Contacto</h6>
+            <ul class="list-unstyled text-muted">
+              <li class="mb-2"><i class="fas fa-map-marker-alt me-2 text-primary"></i>Av. Principal 123, Ciudad</li>
+              <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i>info@autoventas.com</li>
+              <li><i class="fas fa-phone me-2 text-primary"></i>+54 11 1234-5678</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-bold mb-3 text-dark">Newsletter</h6>
+            <p class="text-muted small">Suscríbete para recibir nuestras últimas ofertas.</p>
+            <form>
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Tu email">
+                <button class="btn btn-primary" type="button">Suscribir</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center text-muted small">&copy; {% now "Y" %} AutoVentas. Todos los derechos reservados.</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Contacto Form Styles - Concesionaria AutoVentas
+   ========================================================================== */
+
+.form-floating > .form-control:focus ~ label {
+    color: #007bff;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: #6c757d;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.4s ease;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 2rem;
+    }
+}

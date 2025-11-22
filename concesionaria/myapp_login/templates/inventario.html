@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Inventario de Automóviles - Panel de Administración{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inventario.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-bold text-primary mb-3">
+                <i class="fas fa-clipboard-list me-3"></i>Inventario
+            </h1>
+            <p class="lead text-muted mb-4">
+                Gestiona tu inventario de automóviles de manera eficiente
+            </p>
+            <hr class="w-25 mx-auto mb-4" style="height: 3px; background: linear-gradient(45deg, #007bff, #0056b3);">
+        </div>
+
+        <!-- Action Bar (Responsive) -->
+        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-4 p-4 bg-white rounded-4 shadow-sm">
+            <div class="d-flex align-items-center mb-3 mb-md-0">
+                <div class="bg-primary rounded-circle p-3 me-3">
+                    <i class="fas fa-car text-white fa-lg"></i>
+                </div>
+                <div>
+                    <h4 class="mb-0 fw-bold text-dark">Total de Vehículos</h4>
+                    <p class="mb-0 text-muted">{{ automoviles|length }} automóvil{{ automoviles|length|pluralize:"es" }} registrado{{ automoviles|length|pluralize }}</p>
+                </div>
+            </div>
+            <div class="d-grid d-md-block">
+                <a href="{% url 'panel:crear_automovil' %}" 
+                   class="btn btn-success btn-lg rounded-pill px-4 fw-bold shadow-sm">
+                    <i class="fas fa-plus me-2"></i>Agregar Automóvil
+                </a>
+            </div>
+        </div>
+
+        <!-- Inventory Content -->
+        {% if automoviles %}
+            <!-- Desktop Table View -->
+            <div class="d-none d-lg-block">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header py-4" style="background: linear-gradient(45deg, #007bff, #0056b3);">
+                        <h5 class="mb-0 text-white fw-bold">
+                            <i class="fas fa-table me-2"></i>Lista de Automóviles
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="px-4 py-3 fw-bold text-primary">
+                                        <i class="fas fa-tag me-2"></i>Marca
+                                    </th>
+                                    <th class="px-4 py-3 fw-bold text-primary">
+                                        <i class="fas fa-car me-2"></i>Modelo
+                                    </th>
+                                    <th class="px-4 py-3 fw-bold text-primary">
+                                        <i class="fas fa-calendar me-2"></i>Año
+                                    </th>
+                                    <th class="px-4 py-3 fw-bold text-primary">
+                                        <i class="fas fa-dollar-sign me-2"></i>Precio
+                                    </th>
+                                    <th class="px-4 py-3 fw-bold text-primary">
+                                        <i class="fas fa-info-circle me-2"></i>Descripción
+                                    </th>
+                                    <th class="px-4 py-3 fw-bold text-primary text-center">
+                                        <i class="fas fa-cogs me-2"></i>Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for automovil in automoviles %}
+                                    <tr class="inventory-row">
+                                        <td class="px-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                                                    <i class="fas fa-car text-primary"></i>
+                                                </div>
+                                                <span class="fw-bold text-dark">{{ automovil.marca }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 fw-semibold">{{ automovil.modelo }}</td>
+                                        <td class="px-4 py-3">
+                                            <span class="badge bg-info px-3 py-2 rounded-pill">{{ automovil.anio }}</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="text-success fw-bold fs-5">${{ automovil.precio|floatformat:0 }}</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="text-muted" style="max-width: 200px;">
+                                                {% if automovil.descripcion %}
+                                                    {{ automovil.descripcion|truncatewords:8 }}
+                                                {% else %}
+                                                    <em>Sin descripción</em>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <div class="inventory-actions">
+                                                <a href="{% url 'panel:editar_automovil' automovil.id %}" 
+                                                   class="inventory-btn inventory-btn-edit"
+                                                   title="Editar automóvil">
+                                                    <i class="fas fa-edit"></i>Editar
+                                                </a>
+                                                <a href="{% url 'panel:eliminar_automovil' automovil.id %}" 
+                                                   class="inventory-btn inventory-btn-delete"
+                                                   title="Eliminar automóvil"
+                                                   onclick="return confirm('¿Estás seguro de que deseas eliminar este automóvil?')">
+                                                    <i class="fas fa-trash"></i>Eliminar
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="d-lg-none">
+                <div class="row g-3">
+                    {% for automovil in automoviles %}
+                        <div class="col-12">
+                            <div class="card border-0 shadow-sm rounded-4 mobile-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex">
+                                        <div class="me-3">
+                                            {% if automovil.imagen %}
+                                                <img src="{{ automovil.imagen.url }}" class="rounded" alt="{{ automovil.marca }} {{ automovil.modelo }}" style="width: 80px; height: 80px; object-fit: cover;">
+                                            {% else %}
+                                                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                                    <i class="fas fa-image fa-2x text-muted"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-0 fw-bold text-dark">{{ automovil.marca }} {{ automovil.modelo }}</h6>
+                                                    <small class="text-muted">Año {{ automovil.anio }}</small>
+                                                </div>
+                                                <span class="badge bg-success-subtle text-success-emphasis fw-semibold rounded-pill fs-6">
+                                                    ${{ automovil.precio|floatformat:0 }}
+                                                </span>
+                                            </div>
+                                            <div class="mt-3">
+                                                <a href="{% url 'panel:editar_automovil' automovil.id %}" 
+                                                   class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                                    <i class="fas fa-edit me-1"></i>Editar
+                                                </a>
+                                                <a href="{% url 'panel:eliminar_automovil' automovil.id %}" 
+                                                   class="btn btn-sm btn-outline-danger rounded-pill px-3"
+                                                   onclick="return confirm('¿Estás seguro de que deseas eliminar este automóvil?')">
+                                                    <i class="fas fa-trash me-1"></i>Eliminar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <div class="card border-0 shadow-lg mx-auto" style="max-width: 600px; border-radius: 20px;">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i class="fas fa-clipboard-list fa-4x text-muted opacity-50"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-3">Inventario Vacío</h3>
+                        <p class="text-muted mb-4">
+                            Aún no has agregado ningún automóvil a tu inventario. 
+                            Comienza agregando tu primer vehículo.
+                        </p>
+                        <a href="{% url 'panel:crear_automovil' %}" class="btn btn-success btn-lg rounded-pill px-4">
+                            <i class="fas fa-plus me-2"></i>Agregar Primer Automóvil
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Quick Stats -->
+        {% if automoviles %}
+            <div class="mt-5">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(45deg, #28a745, #1e7e34);">
+                            <div class="card-body p-4 text-white text-center">
+                                <i class="fas fa-car-side fa-2x mb-3 opacity-75"></i>
+                                <h4 class="fw-bold">{{ automoviles|length }}</h4>
+                                <p class="mb-0">Total Vehículos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(45deg, #007bff, #0056b3);">
+                            <div class="card-body p-4 text-white text-center">
+                                <i class="fas fa-dollar-sign fa-2x mb-3 opacity-75"></i>
+                                <h4 class="fw-bold">
+                                    {% if automoviles|length > 0 %}
+                                        ${{ automoviles|length }}0,000
+                                    {% else %}
+                                        $0
+                                    {% endif %}
+                                </h4>
+                                <p class="mb-0">Valor Estimado</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(45deg, #ffc107, #e0a800);">
+                            <div class="card-body p-4 text-white text-center">
+                                <i class="fas fa-chart-line fa-2x mb-3 opacity-75"></i>
+                                <h4 class="fw-bold">100%</h4>
+                                <p class="mb-0">Disponibilidad</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

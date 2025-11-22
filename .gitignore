@@ -1,0 +1,12 @@
+# Python
+*.pyc
+__pycache__/
+
+# Entorno Virtual
+myenv_cafeteria/
+
+# Django
+*.log
+*.sqlite3
+
+.vscode/

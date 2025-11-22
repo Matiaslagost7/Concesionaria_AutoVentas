@@ -1,0 +1,289 @@
+:root {
+    --color-primary: #0d6efd;
+    --color-secondary: #6c757d;
+    --color-success: #198754;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-info: #0dcaf0;
+    --color-light: #f8f9fa;
+    --color-dark: #212529;
+    --color-bg: #f4f6fa;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 10px 24px rgba(0,0,0,0.12);
+    --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    --radius: 0.5rem;
+    --font-main: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    background: var(--color-bg);
+    font-family: var(--font-main);
+    color: var(--color-dark);
+    padding-top: 70px; /* Ajuste para navbar fija */
+}
+
+/* --- NAVBAR --- */
+.navbar.bg-white {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-brand-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--color-primary);
+}
+
+.navbar .nav-link {
+    color: var(--color-dark) !important;
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+}
+
+.navbar .nav-link:hover, .navbar .nav-link.active {
+    background: rgba(0, 123, 255, 0.1);
+    color: var(--color-primary) !important;
+}
+
+.navbar .btn-outline-primary {
+    border-width: 2px;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+/* --- FOOTER --- */
+footer.bg-light {
+    background-color: #ffffff !important;
+    border-top: 1px solid #dee2e6;
+}
+
+.footer-brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.footer-link:hover {
+    color: var(--color-primary) !important;
+}
+
+.footer-social-icon {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social-icon:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* --- OTROS --- */
+.pt-navbar-fix {
+    padding-top: 2rem; /* Espacio adicional después del navbar */
+}
+
+.card {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+}
+
+.btn {
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+
+.admin-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--admin-shadow-md);
+}
+
+.admin-metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.admin-metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--admin-dark);
+    margin-bottom: 0.25rem;
+}
+
+.admin-metric-label {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Breadcrumbs del panel */
+.admin-breadcrumb {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-breadcrumb-item {
+    color: #6c757d;
+}
+
+.admin-breadcrumb-item a {
+    color: var(--admin-primary);
+    text-decoration: none;
+}
+
+.admin-breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.admin-breadcrumb-item.active {
+    color: var(--admin-dark);
+    font-weight: 500;
+}
+
+/* Paginación del panel */
+.admin-pagination {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-page-link {
+    color: var(--admin-primary);
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--admin-transition);
+}
+
+.admin-page-link:hover {
+    background: var(--admin-primary);
+    color: white;
+}
+
+.admin-page-link.active {
+    background: var(--admin-primary);
+    color: white;
+}
+
+/* Utilidades del panel */
+.admin-text-primary { color: var(--admin-primary) !important; }
+.admin-text-success { color: var(--admin-success) !important; }
+.admin-text-danger { color: var(--admin-danger) !important; }
+.admin-text-warning { color: var(--admin-warning) !important; }
+.admin-text-info { color: var(--admin-info) !important; }
+
+.admin-bg-primary { background-color: var(--admin-primary) !important; }
+.admin-bg-success { background-color: var(--admin-success) !important; }
+.admin-bg-danger { background-color: var(--admin-danger) !important; }
+.admin-bg-warning { background-color: var(--admin-warning) !important; }
+.admin-bg-info { background-color: var(--admin-info) !important; }
+
+/* Responsive para panel administrativo */
+@media (max-width: 768px) {
+    .admin-nav {
+        min-height: auto;
+        padding: 1rem 0;
+    }
+    
+    .admin-main {
+        padding: 1rem;
+    }
+    
+    .admin-card-body {
+        padding: 1rem;
+    }
+    
+    .admin-metric-card {
+        margin-bottom: 1rem;
+    }
+    
+    .admin-table {
+        overflow-x: auto;
+    }
+}
+
+/* Animaciones del panel */
+@keyframes adminFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-fade-in {
+    animation: adminFadeIn 0.6s ease-out;
+}
+
+/* Estados de carga */
+.admin-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--admin-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

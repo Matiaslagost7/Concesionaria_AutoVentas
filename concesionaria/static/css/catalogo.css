@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Catálogo Styles - Concesionaria AutoVentas
+   ========================================================================== */
+
+.vehicle-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15) !important;
+}
+
+.vehicle-card:hover .vehicle-image {
+    transform: scale(1.05);
+}
+
+.vehicle-image {
+    height: 250px; 
+    object-fit: cover; 
+    transition: transform 0.4s ease;
+}
+
+.badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.card-title {
+    color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+    .display-3 {
+        font-size: 2.5rem;
+    }
+    
+    .vehicle-card {
+        margin-bottom: 2rem;
+    }
+}

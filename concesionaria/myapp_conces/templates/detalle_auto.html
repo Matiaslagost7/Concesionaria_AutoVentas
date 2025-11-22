@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ auto.marca }} {{ auto.modelo }} - Detalles{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'css/admin-forms.css' %}" rel="stylesheet">
+<style>
+.hero-image {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero-overlay {
+    background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: end;
+    padding: 2rem;
+}
+
+.spec-item {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-left: 4px solid #0d6efd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spec-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.price-badge {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.gallery-thumbnail {
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.gallery-thumbnail:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.action-button {
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid bg-light min-vh-100 py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <div class="container">
+            <ol class="breadcrumb bg-white rounded shadow-sm px-3 py-2 mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'public:index' %}" class="text-decoration-none">
+                        <i class="fas fa-home me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'public:catalogo' %}" class="text-decoration-none">
+                        <i class="fas fa-car me-1"></i>Catálogo
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ auto.marca }} {{ auto.modelo }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Hero Image -->
+                <div class="card border-0 shadow-lg mb-4 overflow-hidden">
+                    {% if auto.imagen %}
+                        <div class="hero-image" style="background-image: url('{{ auto.imagen.url }}');">
+                            <div class="hero-overlay">
+                                <div class="text-white">
+                                    <h1 class="display-4 fw-bold mb-2">{{ auto.marca }}</h1>
+                                    <h2 class="h3 mb-0 opacity-75">{{ auto.modelo }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="hero-image bg-secondary d-flex align-items-center justify-content-center">
+                            <i class="fas fa-car text-white" style="font-size: 5rem; opacity: 0.3;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Vehicle Specifications -->
+                <div class="card border-0 shadow-lg mb-4">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h4 class="mb-0">
+                            <i class="fas fa-clipboard-list me-2"></i>
+                            Especificaciones del Vehículo
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="spec-item p-3 rounded h-100">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-tag"></i>
+                                    </div>
+                                    <h6 class="fw-bold text-center">Marca</h6>
+                                    <p class="text-center mb-0 h5 text-primary">{{ auto.marca }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="spec-item p-3 rounded h-100">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <h6 class="fw-bold text-center">Modelo</h6>
+                                    <p class="text-center mb-0 h5 text-primary">{{ auto.modelo }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="spec-item p-3 rounded h-100">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <h6 class="fw-bold text-center">Año</h6>
+                                    <p class="text-center mb-0 h5 text-primary">{{ auto.anio }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="spec-item p-3 rounded h-100">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <h6 class="fw-bold text-center">Precio</h6>
+                                    <p class="text-center mb-0 h5 text-success">${{ auto.precio|floatformat:0 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                {% if auto.descripcion %}
+                <div class="card border-0 shadow-lg mb-4">
+                    <div class="card-header bg-info text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Descripción Detallada
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="mb-0 fs-6 lh-lg">{{ auto.descripcion }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Price Card -->
+                <div class="card border-0 shadow-lg mb-4">
+                    <div class="card-body text-center p-4">
+                        <h5 class="text-muted mb-3">Precio de Venta</h5>
+                        <div class="price-badge mx-auto mb-4">${{ auto.precio|floatformat:0 }}</div>
+                        <p class="text-muted small mb-0">Precio sujeto a disponibilidad</p>
+                    </div>
+                </div>
+
+                <!-- Contact Actions -->
+                <div class="card border-0 shadow-lg mb-4">
+                    <div class="card-header bg-success text-white py-3">
+                        <h6 class="mb-0">
+                            <i class="fas fa-handshake me-2"></i>
+                            ¿Te interesa este vehículo?
+                        </h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'public:contacto' %}" 
+                               class="btn btn-primary action-button">
+                                <i class="fas fa-phone me-2"></i>Contactar Vendedor
+                            </a>
+                            <a href="{% url 'public:catalogo' %}" 
+                               class="btn btn-outline-primary action-button">
+                                <i class="fas fa-car me-2"></i>Ver Más Vehículos
+                            </a>
+                            <a href="{% url 'public:index' %}" 
+                               class="btn btn-outline-secondary action-button">
+                                <i class="fas fa-home me-2"></i>Volver al Inicio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Status -->
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h6 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Estado del Vehículo
+                        </h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="text-muted">Estado:</span>
+                            <span class="badge bg-success px-3 py-2">Disponible</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="text-muted">Condición:</span>
+                            <span class="badge bg-primary px-3 py-2">Excelente</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="text-muted">Ubicación:</span>
+                            <span class="badge bg-info px-3 py-2">Showroom</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body bg-light text-center py-4">
+                        <h6 class="text-muted mb-2">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Información del Sistema
+                        </h6>
+                        <small class="text-muted">
+                            ID del Vehículo: #{{ auto.id }} | 
+                            Última Actualización: {% now "d/m/Y H:i" %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
