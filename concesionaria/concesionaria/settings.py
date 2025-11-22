@@ -54,8 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'concesionaria.myapp_login.apps.MyappLoginConfig',
-    'concesionaria.myapp_conces.apps.MyappConcesConfig'
+    'myapp_login.apps.MyappLoginConfig',
+    'myapp_conces.apps.MyappConcesConfig'
 ]
 
 MIDDLEWARE = [

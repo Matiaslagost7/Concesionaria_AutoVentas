@@ -21,12 +21,12 @@ urlpatterns = [
     # ========================================================================
     # URLs PÚBLICAS - Sin autenticación requerida
     # ========================================================================
-    path('', include('concesionaria.myapp_conces.urls')),
+    path('', include('myapp_conces.urls')),
     
     # ========================================================================
     # URLs ADMINISTRATIVAS - Panel de gestión con autenticación
     # ========================================================================
-    path('panel/', include('concesionaria.myapp_login.urls')),
+    path('panel/', include('myapp_login.urls')),
 ]
 
 # ============================================================================
