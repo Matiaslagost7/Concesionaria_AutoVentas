@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}¡Compra Exitosa!{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="alert alert-success p-5">
+        <h2 class="mb-4"><i class="fas fa-check-circle me-2"></i>¡Gracias por tu compra!</h2>
+        <p>Tu compra ha sido registrada correctamente.<br>
+        Número de compra: <strong>#{{ compra.id }}</strong></p>
+        <a href="{% url 'public:catalogo' %}" class="btn btn-primary mt-3">Volver al Catálogo</a>
+    </div>
+</div>
+{% endblock %}

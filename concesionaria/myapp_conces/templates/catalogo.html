@@ -114,14 +114,28 @@
                                     </p>
                                 {% endif %}
 
-                                <!-- Action Button -->
-                                <div class="d-grid">
-                                    <a href="{% url 'public:detalle_auto' auto.id %}" 
+                                <!-- Action Buttons -->
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'public:detalle_auto' auto.id %}"
                                        class="btn btn-primary btn-lg rounded-pill fw-bold"
                                        style="background: linear-gradient(45deg, #007bff, #0056b3); border: none; transition: all 0.3s ease;">
                                         <i class="fas fa-eye me-2"></i>Ver Detalles
                                         <i class="fas fa-arrow-right ms-2"></i>
                                     </a>
+                                    {% if auto.disponible %}
+                                        {% if user.is_authenticated %}
+                                            <a href="{% url 'public:agregar_al_carrito' auto.id %}"
+                                               class="btn btn-success btn-lg rounded-pill fw-bold mt-2">
+                                                <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'panel:register' %}?next={% url 'public:agregar_al_carrito' auto.id %}"
+                                               class="btn btn-success btn-lg rounded-pill fw-bold mt-2"
+                                               title="Debes estar registrado para realizar la compra">
+                                                <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

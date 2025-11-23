@@ -41,7 +41,12 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'public:contacto' %}"><i class="fas fa-phone me-2"></i>Contacto</a>
             </li>
-            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link position-relative" href="{% url 'public:ver_carrito' %}">
+                <i class="fas fa-shopping-cart me-2"></i>Carrito
+              </a>
+            </li>
+            {% if user.is_authenticated and perms.myapp_login.view_inventario %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'panel:inventario' %}"><i class="fas fa-clipboard-list me-2"></i>Inventario</a>
             </li>

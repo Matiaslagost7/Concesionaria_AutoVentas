@@ -19,6 +19,9 @@ def RegisterView(request):
             model = CustomUser
             fields = ('username', 'email', 'password1', 'password2')
 
+    mensaje = None
+    if request.GET.get('next'):
+        mensaje = 'Debes estar registrado para realizar la compra.'
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -31,7 +34,7 @@ def RegisterView(request):
             return redirect('public:index')  # Redirect to a success page.  
     else:
         form = CustomUserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'register.html', {'form': form, 'mensaje': mensaje})
 
 def LoginView(request):
     if request.method == 'POST':

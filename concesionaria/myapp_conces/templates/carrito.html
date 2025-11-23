@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Carrito de Compras{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4"><i class="fas fa-shopping-cart me-2"></i>Tu Carrito</h2>
+    {% if items and items|length > 0 %}
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Vehículo</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.automovil }}</td>
+                    <td>${{ item.automovil.precio }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ item.automovil.precio|floatformat:2|add:item.cantidad|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'public:eliminar_del_carrito' item.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4>Total: <span class="text-success">${{ total|floatformat:2 }}</span></h4>
+            <a href="{% url 'public:finalizar_compra' %}" class="btn btn-primary btn-lg">Finalizar Compra</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <i class="fas fa-shopping-cart fa-2x mb-3"></i>
+            <h4>Tu carrito está vacío</h4>
+            <p class="mb-4">No tienes productos en el carrito.</p>
+            <a href="{% url 'public:catalogo' %}" class="btn btn-primary">Volver al Catálogo</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
