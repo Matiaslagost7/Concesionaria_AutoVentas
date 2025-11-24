@@ -46,13 +46,14 @@ class ContactoForm(forms.Form):
 class AutomovilForm(forms.ModelForm):
     class Meta:
         model = Automovil
-        fields = ['marca', 'modelo', 'anio', 'precio', 'disponible', 'imagen', 'descripcion']
+        fields = ['marca', 'modelo', 'anio', 'precio', 'disponible', 'cantidad', 'imagen', 'descripcion']
         widgets = {
             'marca': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Toyota, Ford, BMW'}),
             'modelo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Corolla, Mustang, X3'}),
             'anio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '2024'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '25000.00'}),
             'disponible': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad en stock', 'min': 0}),
             'imagen': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Descripción del vehículo...'})
         }
@@ -62,6 +63,7 @@ class AutomovilForm(forms.ModelForm):
             'anio': 'Año',
             'precio': 'Precio (USD)',
             'disponible': 'Disponible para venta',
+            'cantidad': 'Cantidad en stock',
             'imagen': 'Imagen del vehículo',
             'descripcion': 'Descripción'
         }

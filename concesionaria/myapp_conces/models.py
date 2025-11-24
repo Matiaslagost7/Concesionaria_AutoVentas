@@ -11,6 +11,7 @@ class Automovil(models.Model):
     disponible = models.BooleanField(default=True)
     descripcion = models.TextField(blank=True, null=True)
     imagen = models.ImageField(upload_to='autos/', blank=True, null=True)
+    cantidad = models.PositiveIntegerField(default=1, help_text="Cantidad disponible en stock")
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.anio})"

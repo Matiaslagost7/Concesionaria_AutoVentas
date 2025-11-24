@@ -124,10 +124,16 @@ def finalizar_compra(request):
         messages.error(request, "El carrito está vacío.")
         return redirect('public:ver_carrito')
     total = sum(item.automovil.precio * item.cantidad for item in carrito.items.all())
-    # Marcar autos como no disponibles
+    # Descontar cantidad y marcar como no disponible si llega a 0
     for item in carrito.items.all():
-        item.automovil.disponible = False
-        item.automovil.save()
+        auto = item.automovil
+        if auto.cantidad >= item.cantidad:
+            auto.cantidad -= item.cantidad
+        else:
+            auto.cantidad = 0
+        if auto.cantidad == 0:
+            auto.disponible = False
+        auto.save()
     compra = Compra.objects.create(usuario=request.user, carrito=carrito, total=total)
     carrito.activo = False
     carrito.save()
