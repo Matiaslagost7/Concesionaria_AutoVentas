@@ -6,6 +6,9 @@
             <div class="card-signin my-5 card shadow">
                 <div class="card-body">
                     <h5 class="card-title text-center">Iniciar Sesión</h5>
+                    {% if mensaje %}
+                        <div class="alert alert-danger text-center">{{ mensaje }}</div>
+                    {% endif %}
                     <form class="form-signin text-center mb-3 w-100 mx-auto p-3" method="post">
                         {% csrf_token %}
                         <div class="form-label-group mb-3">

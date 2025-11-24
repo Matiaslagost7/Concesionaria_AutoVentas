@@ -24,7 +24,19 @@ def RegisterView(request):
         mensaje = 'Debes estar registrado para realizar la compra.'
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        if User.objects.filter(username=username).exists():
+            mensaje = 'El nombre de usuario ya existe.'
+        elif User.objects.filter(email=email).exists():
+            mensaje = 'El correo electrónico ya está registrado.'
+        elif password1 != password2:
+            mensaje = 'Las contraseñas no coinciden.'
+        elif form.is_valid():
             user = form.save()
             group_name = request.POST.get('group')
             if group_name:
@@ -37,14 +49,24 @@ def RegisterView(request):
     return render(request, 'register.html', {'form': form, 'mensaje': mensaje})
 
 def LoginView(request):
+    mensaje = None
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        try:
+            user_obj = User.objects.get(username=username)
+        except User.DoesNotExist:
+            mensaje = 'El usuario no existe.'
+            return render(request, 'login.html', {'mensaje': mensaje})
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('public:index')
-    return render(request, 'login.html')
+        else:
+            mensaje = 'La contraseña es incorrecta.'
+    return render(request, 'login.html', {'mensaje': mensaje})
 
 def LogoutView(request):
     logout(request)

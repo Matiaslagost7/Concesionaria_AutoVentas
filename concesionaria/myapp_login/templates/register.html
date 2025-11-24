@@ -7,7 +7,7 @@
                 <div class="card-body p-3 m-3">
                     <h5 class="card-title text-center mb-3 font-weight-bold text-uppercase">Registrate</h5>
                     {% if mensaje %}
-                        <div class="alert alert-info text-center">{{ mensaje }}</div>
+                        <div class="alert alert-danger text-center">{{ mensaje }}</div>
                     {% endif %}
                     <form class="form-signin text-left mb-3 w-100 mx-auto" method="POST">
                         {% csrf_token %}
