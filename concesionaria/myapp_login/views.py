@@ -119,7 +119,7 @@ def Crear_AutomovilView(request):
         if form.is_valid():
             automovil = form.save()
             messages.success(request, f'Automóvil {automovil.marca} {automovil.modelo} creado exitosamente.')
-            return redirect('inventario')
+            return redirect('panel:inventario')
         else:
             messages.error(request, 'Por favor corrige los errores en el formulario.')
     else:
@@ -156,7 +156,7 @@ def Editar_AutomovilView(request, automovil_id):
         if form.is_valid():
             form.save()
             messages.success(request, f'Automóvil {automovil.marca} {automovil.modelo} actualizado exitosamente.')
-            return redirect('inventario')
+            return redirect('panel:inventario')
         else:
             messages.error(request, 'Por favor corrige los errores en el formulario.')
     else:
